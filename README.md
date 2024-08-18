@@ -1,6 +1,6 @@
 Here's a stylish and comprehensive `README.md` for your project:
 
-```markdown
+
 # Tutorial React Redux
 
 Welcome to the **Tutorial React Redux** project! This project showcases a full-featured CRUD application using React, Redux, and Material-UI. It's designed to demonstrate how to build a robust application with modern web technologies.
