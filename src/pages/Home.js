@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -13,35 +13,49 @@ import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import { useNavigate } from 'react-router-dom';
-
-
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteUser, loadUsers } from '../redux/actions';
 
 const Home = () => {
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { users } = useSelector(state => state.users)
+  const { users } = useSelector(state => state.data);
+
+  const [open, setOpen] = useState(false);
+  const [userIdToDelete, setUserIdToDelete] = useState(null);
 
   useEffect(() => {
-    dispatch(loadUsers())
-  }, [dispatch])
+    dispatch(loadUsers());
+  }, [dispatch]);
 
+  const handleClickOpen = (userId) => {
+    setUserIdToDelete(userId);
+    setOpen(true);
+  };
 
-  const handleDelete = (userId) => {
-    if (window.confirm("Are you sure to delete the user!!?")) {
-      dispatch(deleteUser(userId));
+  const handleClose = () => {
+    setOpen(false);
+    setUserIdToDelete(null);
+  };
+
+  const handleDelete = () => {
+    if (userIdToDelete) {
+      dispatch(deleteUser(userIdToDelete));
+      handleClose();
     }
-  }
-
+  };
 
   return (
     <div>
       <Container maxWidth="m" sx={{ marginTop: '2rem' }}>
         <Box sx={{ textAlign: 'left', marginBottom: '1rem' }}>
-          <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={()=> navigate('/add')} >Add user</Button>
+          <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={() => navigate('/add')}>Add user</Button>
         </Box>
         <TableContainer component={Paper} sx={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#f9f9f9', borderRadius: '0px' }}>
           <Table sx={{ minWidth: 650 }} aria-label="customized table">
@@ -67,14 +81,27 @@ const Home = () => {
                   <TableCell align="left">{row.email}</TableCell>
                   <TableCell align="left">{row.contact}</TableCell>
                   <TableCell align="center">
-
                     <ButtonGroup
                       disableElevation
                       variant="contained"
                       aria-label="Disabled button group"
                     >
-                      <Button variant="contained" color="success" startIcon={<EditIcon />}>Edit</Button>
-                      <Button variant="contained" color="error" startIcon={<DeleteIcon />} onClick={() => handleDelete(row.id)}/>
+                      <Button
+                        variant="contained"
+                        color="success"
+                        startIcon={<EditIcon />}
+                        onClick={()=>navigate(`/edit/${row.id}`)}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        variant="contained"
+                        color="error"
+                        startIcon={<DeleteIcon />}
+                        onClick={() => handleClickOpen(row.id)}
+                      >
+                        Delete
+                      </Button>
                     </ButtonGroup>
                   </TableCell>
                 </TableRow>
@@ -83,6 +110,30 @@ const Home = () => {
           </Table>
         </TableContainer>
       </Container>
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Confirm Deletion"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete this user? This action cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDelete} color="error" autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   )
 }

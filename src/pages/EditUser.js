@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { addUser } from '../redux/actions';
-const AddUser = () => {
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { addUser, getUserByID, updateUser } from '../redux/actions';
+const Edituser = () => {
+  const { id } = useParams();
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [state, setState] = useState({
@@ -16,9 +18,26 @@ const AddUser = () => {
     contact: "",
     address: ""
   });
+  const { user } = useSelector((state)=> state.data);
   const [error, setError] = useState("");
-
   const { name, email, contact, address } = state;
+
+
+
+  // Fetching user data by ID
+  useEffect(() => {
+    if (id) {
+      dispatch(getUserByID(id));
+    }
+  }, [dispatch, id]);
+
+  // Updating state with fetched user data
+  useEffect(() => {
+    if (user) {
+      setState({ ...user });
+    }
+  }, [user]);
+
 
   const handleInputChange = (e) => {
     let { name, value } = e.target;
@@ -30,8 +49,8 @@ const AddUser = () => {
     if (!name || !email || !contact || !address) {
       setError("Please fill all the inputs");
       console.log("Please fill all the inputs")
-    }else{
-      dispatch(addUser(state));
+    } else {
+      dispatch(updateUser(state, id));
 
       navigate("/")
     }
@@ -41,7 +60,7 @@ const AddUser = () => {
   return (
     <Container maxWidth="sm" sx={{ marginTop: '2rem' }}>
       <Box sx={{ textAlign: 'left', marginBottom: '1rem' }}>
-        <h2>Add New User</h2>
+        <h2>Edit User</h2>
         {error && <h3 style={{ color: "red" }}>{error}</h3>}
         <Button variant="contained" color="primary" startIcon={<ArrowBackIcon />} onClick={() => navigate('/')}>
           Back
@@ -91,11 +110,11 @@ const AddUser = () => {
           onChange={handleInputChange}
         />
         <Button variant='contained' color='primary' type='submit'>
-          Save
+          Update
         </Button>
       </Box>
     </Container>
   );
 };
 
-export default AddUser;
+export default Edituser;

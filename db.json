@@ -1,39 +1,32 @@
 {
   "user": [
     {
-      "name": "Adam",
+      "name": "Adam ",
       "address": "London",
       "email": "adam@gmail.com",
-      "contact": "8367367",
+      "contact": "959595",
       "id": "1"
     },
     {
       "name": "Tommy",
-      "address": "japan",
+      "address": "Tunisia",
       "email": "tommy@gmail.com",
-      "contact": "836736765",
+      "contact": "98603781",
       "id": "2"
     },
     {
       "name": "Jane",
       "address": "Australia",
       "email": "jane@gmail.com",
-      "contact": "856736755",
+      "contact": "29401131",
       "id": "3"
     },
     {
       "id": "479c",
       "name": "Khalil Yahyaoui",
       "email": "khalilo2y@gmail.com",
-      "contact": "29767623",
+      "contact": "27549956",
       "address": "Gafsa"
-    },
-    {
-      "id": "caa4",
-      "name": "Aya Yayaoui",
-      "email": "aya@gmail.com",
-      "contact": "20120120",
-      "address": "Mdhilla"
     }
   ]
 }
