@@ -6,7 +6,7 @@ import Container from '@mui/material/Container';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addUser, getUserByID, updateUser } from '../redux/actions';
+import { getUserByID, updateUser } from '../redux/actions';
 const Edituser = () => {
   const { id } = useParams();
 

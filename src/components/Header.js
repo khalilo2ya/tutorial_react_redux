@@ -91,7 +91,7 @@ const Header = () => {
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
             <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-              MyLogo
+              ayaKode
             </Link>
           </Typography>
 
