@@ -118,3 +118,22 @@ Thank you for checking out this project! Feel free to contribute and enhance the
 - **License**: Mentions the licensing information.
 
 Feel free to adjust any sections to better fit your project specifics!
+
+
+# Tutorial React Redux
+
+## Screenshots
+
+Here are some screenshots of the application:
+
+1. **User List View**
+   ![User List View](captures/01.jpg)
+
+2. **Delete User Confirm**
+   ![Delete User Confirm](captures/02.jpg)
+
+3. **Edit User Form**
+   ![Edit User Form](captures/03.jpg)
+
+4. **Add user**
+   ![Add user](captures/04.jpg)
