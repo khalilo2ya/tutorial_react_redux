@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
+import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -83,7 +84,8 @@ const Edituser = () => {
             go Back
           </Button>
           <h2>Edit User</h2>
-          {error && <h3 style={{ color: "red" }}>{error}</h3>}
+          {/* {error && <h3 style={{ color: "red" }}>{error}</h3>} */}
+          {error && <Alert severity="error" variant="outlined">{error}</Alert>}
         </Box>
         <Box
           component="form"

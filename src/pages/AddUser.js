@@ -9,6 +9,9 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../redux/actions';
 import StyledFileInput from '../components/StyledFileInput';
+
+import Alert from '@mui/material/Alert';
+
 const AddUser = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -63,7 +66,10 @@ const AddUser = () => {
             Go Back
           </Button>
           <h2>Add New User</h2>
-          {error && <h3 style={{ color: "red" }}>{error}</h3>}
+          {/* {error && <Alert severity="error" variant="filled">{error}</Alert>} */}
+          {error && <Alert severity="error" variant="outlined"  >{error}</Alert>}
+
+          
         </Box>
         <Box
           component="form"
