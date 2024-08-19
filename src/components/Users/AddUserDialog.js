@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -13,7 +14,7 @@ import StyledFileInput from '../StyledFileInput';
 import Slide from '@mui/material/Slide';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="down" ref={ref} {...props} />;
+    return <Slide direction="up" ref={ref} {...props} />;
   });
 
 
@@ -60,6 +61,8 @@ const AddUserDialog = ({ open, handleClose }) => {
       setError("Please fill all the inputs");
     } else {
       dispatch(addUser(state));
+      setState("");
+      setError("")
       handleClose(); // Ferme la boîte de dialogue après l'ajout
     }
   }
@@ -67,6 +70,7 @@ const AddUserDialog = ({ open, handleClose }) => {
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth fullScreen TransitionComponent={Transition}>
       <DialogTitle>Add New User</DialogTitle>
+      {error && <Alert severity="error" variant="outlined"  >{error}</Alert>}
       <DialogContent>
         <Box
           component="form"
@@ -124,7 +128,7 @@ const AddUserDialog = ({ open, handleClose }) => {
             value={bio}
             onChange={handleInputChange}
             multiline
-            rows={4}
+            rows={2}
             fullWidth
           />
           <StyledFileInput

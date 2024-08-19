@@ -140,7 +140,7 @@ const EditUserDialog = ({ open, handleClose, userId }) => {
                         value={bio}
                         onChange={handleInputChange}
                         multiline
-                        rows={4}
+                        rows={2}
                         fullWidth
                     />
                     <StyledFileInput

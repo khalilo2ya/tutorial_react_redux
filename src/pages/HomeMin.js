@@ -45,7 +45,7 @@ const Home = () => {
 
 
   const handleOpenEditUser = (userId) => {
-    console.log("USER TO EDIT:"+userId)
+    console.log("USER TO EDIT:" + userId)
     setUserToEdit(userId);
     setOpenEditUser(true);
   };
@@ -81,9 +81,9 @@ const Home = () => {
 
   return (
     <div>
-      <Container maxWidth="m" sx={{ marginTop: '2rem' }}>
+      <Container maxWidth="m" sx={{ marginTop: '2rem', marginBottom:'8rem'}}>
         <Box sx={{ textAlign: 'left', marginBottom: '1rem' }}>
-          <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={() => navigate('/add')}>Add user</Button>
+          {/* <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={() => navigate('/add')}>Add user</Button> */}
           <Button variant="contained" color="success" startIcon={<AddIcon />} onClick={handleOpenAddUser}>
             Add user
           </Button>
@@ -134,13 +134,7 @@ const Home = () => {
                         variant="contained"
                         aria-label="Disabled button group"
                       >
-                        <IconButton
-                          variant="contained"
-                          color="success"
-                          onClick={() => navigate(`/edit/${row.id}`)}
-                        >
-                          <EditIcon />
-                        </IconButton>
+                        
                         <IconButton
                           variant="contained"
                           color="warning"

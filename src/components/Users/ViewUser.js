@@ -20,7 +20,7 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="down" ref={ref} {...props} />;
+  return <Slide direction="right" ref={ref} {...props} />;
 });
 
 const ViewUser = ({ open, handleClose, user }) => {
