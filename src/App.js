@@ -8,6 +8,9 @@ import Footer from './components/Footer';
 import AddUser from './pages/AddUser';
 import Edituser from './pages/EditUser';
 import About from './pages/About';
+import EnhancedTableHead from './pages/EnhancedTableHead'
+import DataTable from './pages/DataTable'
+
 function App() {
   return (
     <div className="App">
@@ -18,7 +21,10 @@ function App() {
         <Route path='/about' element={<About/>}/>
 
         <Route path='/add' element={<AddUser/>}/>
+        <Route path='/headtable' element={<EnhancedTableHead/>}/>
+        <Route path='/datatable' element={<DataTable/>}/>
         <Route path='/edit/:id' element={<Edituser/>}/>
+
 
       </Routes>
       <Footer/> 

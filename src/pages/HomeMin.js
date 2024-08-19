@@ -21,6 +21,8 @@ import DeleteUser from '../components/Users/DeleteUser';
 import ViewUser from '../components/Users/ViewUser';
 import IconButton from '@mui/material/IconButton';
 import Avatar from '@mui/material/Avatar';
+import AddUserDialog from '../components/Users/AddUserDialog';
+import EditUserDialog from '../components/Users/EditUserDialog';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -30,6 +32,29 @@ const Home = () => {
   const [openDelete, setOpenDelete] = useState(false);
   const [openDetails, setOpenDetails] = useState(false);
   const [userIdToDelete, setUserIdToDelete] = useState(null);
+  const [openAddUser, setOpenAddUser] = useState(false);
+  const [openEditUser, setOpenEditUser] = useState(false);
+  const [userToEdit, setUserToEdit] = useState(null);
+  const handleOpenAddUser = () => {
+    setOpenAddUser(true);
+  };
+
+  const handleCloseAddUser = () => {
+    setOpenAddUser(false);
+  };
+
+
+  const handleOpenEditUser = (userId) => {
+    console.log("USER TO EDIT:"+userId)
+    setUserToEdit(userId);
+    setOpenEditUser(true);
+  };
+
+  const handleCloseEditUser = () => {
+    setOpenEditUser(false);
+    setUserToEdit(null);
+  };
+
 
   useEffect(() => {
     dispatch(loadUsers());
@@ -59,7 +84,11 @@ const Home = () => {
       <Container maxWidth="m" sx={{ marginTop: '2rem' }}>
         <Box sx={{ textAlign: 'left', marginBottom: '1rem' }}>
           <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={() => navigate('/add')}>Add user</Button>
+          <Button variant="contained" color="success" startIcon={<AddIcon />} onClick={handleOpenAddUser}>
+            Add user
+          </Button>
         </Box>
+
         <TableContainer component={Paper} sx={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#f9f9f9', borderRadius: '0px' }}>
           <Table sx={{ minWidth: 650 }} aria-label="customized table">
             <TableHead>
@@ -82,7 +111,7 @@ const Home = () => {
 
                   <TableCell component="th" scope="row">
                     {row.image ? (
-                      <Avatar src={row.image} alt="User Image"  />
+                      <Avatar src={row.image} alt="User Image" />
                     ) : (
                       <Avatar />
                     )}
@@ -109,6 +138,13 @@ const Home = () => {
                           variant="contained"
                           color="success"
                           onClick={() => navigate(`/edit/${row.id}`)}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                        <IconButton
+                          variant="contained"
+                          color="warning"
+                          onClick={() => handleOpenEditUser(row.id)}
                         >
                           <EditIcon />
                         </IconButton>
@@ -148,6 +184,17 @@ const Home = () => {
         open={openDetails}
         handleClose={handleCloseDetails}
         user={user}
+      />
+
+      <AddUserDialog
+        open={openAddUser}
+        handleClose={handleCloseAddUser}
+      />
+
+      <EditUserDialog
+        open={openEditUser}
+        handleClose={handleCloseEditUser}
+        userId={userToEdit}
       />
     </div>
   );

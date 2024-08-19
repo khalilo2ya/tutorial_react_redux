@@ -48,6 +48,7 @@ export const updateUser = (user, id)=>{
     return function (dispatch) {
         axios.put(`${process.env.REACT_APP_API}/${id}`, user).then((response)=>{
             dispatch(userUpdated(user, id));
+            dispatch(loadUsers());
         }).catch(error => console.log(error));
     }
 }
@@ -62,6 +63,7 @@ export const addUser = (user)=>{
     return function (dispatch) {
         axios.post(`${process.env.REACT_APP_API}`, user).then((response)=>{
             dispatch(userAdded());
+            dispatch(loadUsers());
         }).catch(error => console.log(error));
     }
 }
