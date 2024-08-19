@@ -31,6 +31,7 @@ const ViewUser = ({ open, handleClose, user }) => {
       aria-labelledby="user-details-dialog-title"
       TransitionComponent={Transition}
       fullWidth
+      fullScreen
       maxWidth="sm"
     >
       <DialogTitle id="user-details-dialog-title">User Details</DialogTitle>

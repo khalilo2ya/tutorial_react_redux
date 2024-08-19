@@ -56,7 +56,7 @@ const Footer = () => {
                             Follow Us
                         </Typography>
                         <Box sx={{ display: 'flex', justifyContent: 'center'  }}>
-                            <IconButton aria-label="Facebook" sx={{ color: 'white' }} href="#">
+                            <IconButton aria-label="Facebook" sx={{ color: 'white' }} href="http://www.facebook.com/" target='_blank' >
                                 <FacebookIcon />
                             </IconButton>
                             <IconButton aria-label="Twitter" sx={{ color: 'white' }} href="#">
