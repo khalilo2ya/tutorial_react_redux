@@ -7,6 +7,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../redux/actions';
+
 const AddUser = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -15,27 +16,39 @@ const AddUser = () => {
     email: "",
     contact: "",
     address: "",
-    bio: ""
+    bio: "",
+    image: ""  // Nouvelle propriété pour l'image
   });
   const [error, setError] = useState("");
 
-  const { name, email, contact, address, bio } = state;
+  const { name, email, contact, address, bio, image } = state;
 
   const handleInputChange = (e) => {
-    let { name, value } = e.target;
+    const { name, value } = e.target;
     setState({ ...state, [name]: value });
   }
 
-  const handleSumbit = (e) => {
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    
+    reader.onloadend = () => {
+      setState({ ...state, image: reader.result });
+    }
+    
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  }
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!name || !email || !contact || !address) {
       setError("Please fill all the inputs");
-    }else{
+    } else {
       dispatch(addUser(state));
-
-      navigate("/")
+      navigate("/");
     }
-
   }
 
   return (
@@ -56,7 +69,7 @@ const AddUser = () => {
           flexDirection: 'column',
           gap: '1rem'
         }}
-        onSubmit={handleSumbit}
+        onSubmit={handleSubmit}
       >
         <TextField
           type='text'
@@ -100,6 +113,12 @@ const AddUser = () => {
           multiline
           rows={4} 
         />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+        />
+        {image && <img src={image} alt="User" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />}
         <Button variant='contained' color='primary' type='submit'>
           Save
         </Button>

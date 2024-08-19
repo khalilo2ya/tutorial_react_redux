@@ -7,23 +7,25 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserByID, updateUser } from '../redux/actions';
+
 const Edituser = () => {
   const { id } = useParams();
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  
   const [state, setState] = useState({
     name: "",
     email: "",
     contact: "",
     address: "",
-    bio :""
+    bio: "",
+    image: ""  // Nouveau champ pour l'image
   });
-  const { user } = useSelector((state)=> state.data);
+  
+  const { user } = useSelector((state) => state.data);
   const [error, setError] = useState("");
-  const { name, email, contact, address, bio } = state;
 
-
+  const { name, email, contact, address, bio, image } = state;
 
   // Fetching user data by ID
   useEffect(() => {
@@ -39,21 +41,32 @@ const Edituser = () => {
     }
   }, [user]);
 
-
   const handleInputChange = (e) => {
-    let { name, value } = e.target;
+    const { name, value } = e.target;
     setState({ ...state, [name]: value });
   }
 
-  const handleSumbit = (e) => {
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    
+    reader.onloadend = () => {
+      setState({ ...state, image: reader.result });
+    }
+    
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  }
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!name || !email || !contact || !address) {
       setError("Please fill all the inputs");
     } else {
       dispatch(updateUser(state, id));
-      navigate("/")
+      navigate("/");
     }
-
   }
 
   return (
@@ -74,7 +87,7 @@ const Edituser = () => {
           flexDirection: 'column',
           gap: '1rem'
         }}
-        onSubmit={handleSumbit}
+        onSubmit={handleSubmit}
       >
         <TextField
           type='text'
@@ -116,8 +129,14 @@ const Edituser = () => {
           value={bio}
           onChange={handleInputChange}
           multiline
-          rows={4} 
+          rows={4}
         />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+        />
+        {image && <img src={image} alt="User" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />}
         <Button variant='contained' color='primary' type='submit'>
           Update
         </Button>

@@ -16,6 +16,8 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PersonIcon from '@mui/icons-material/Person';
 import InfoIcon from '@mui/icons-material/Info';
 import Slide from '@mui/material/Slide';
+import Avatar from '@mui/material/Avatar';
+import Typography from '@mui/material/Typography';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
@@ -29,17 +31,19 @@ const ViewUser = ({ open, handleClose, user }) => {
       aria-labelledby="user-details-dialog-title"
       TransitionComponent={Transition}
       fullWidth
-      maxWidth="md"
+      maxWidth="sm"
     >
       <DialogTitle id="user-details-dialog-title">User Details</DialogTitle>
       <DialogContent dividers>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+          {user.image ? (
+            <Avatar src={user.image} alt="User Image" sx={{ width: 80, height: 80, marginRight: 2 }} />
+          ) : (
+            <Avatar sx={{ width: 80, height: 80, marginRight: 2 }} />
+          )}
+          <Typography variant="h6">{user.name}</Typography>
+        </div>
         <List>
-          <ListItem>
-            <ListItemIcon>
-              <PersonIcon />
-            </ListItemIcon>
-            <ListItemText primary="Name" secondary={user.name} />
-          </ListItem>
           <ListItem>
             <ListItemIcon>
               <EmailIcon />
@@ -70,7 +74,7 @@ const ViewUser = ({ open, handleClose, user }) => {
         </List>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="primary">
+        <Button onClick={handleClose} color="primary" variant="contained">
           Close
         </Button>
       </DialogActions>
