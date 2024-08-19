@@ -30,7 +30,6 @@ const AddUser = () => {
     e.preventDefault();
     if (!name || !email || !contact || !address) {
       setError("Please fill all the inputs");
-      console.log("Please fill all the inputs")
     }else{
       dispatch(addUser(state));
 

@@ -18,7 +18,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import Slide from '@mui/material/Slide';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return <Slide direction="down" ref={ref} {...props} />;
 });
 
 const ViewUser = ({ open, handleClose, user }) => {

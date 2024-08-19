@@ -49,10 +49,8 @@ const Edituser = () => {
     e.preventDefault();
     if (!name || !email || !contact || !address) {
       setError("Please fill all the inputs");
-      console.log("Please fill all the inputs")
     } else {
       dispatch(updateUser(state, id));
-
       navigate("/")
     }
 

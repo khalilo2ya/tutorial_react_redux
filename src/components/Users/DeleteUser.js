@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 import { deleteUser, loadUsers } from '../../redux/actions';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return <Slide direction="down" ref={ref} {...props} />;
 });
 
 const DeleteUser = ({ open, handleClose, userIdToDelete }) => {
