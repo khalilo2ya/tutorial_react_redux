@@ -20,6 +20,8 @@ import { deleteUser, loadUsers, getUserByID } from '../redux/actions';
 import DeleteUser from '../components/Users/DeleteUser';
 import ViewUser from '../components/Users/ViewUser';
 import IconButton from '@mui/material/IconButton';
+import Avatar from '@mui/material/Avatar';
+
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -62,6 +64,7 @@ const Home = () => {
           <Table sx={{ minWidth: 650 }} aria-label="customized table">
             <TableHead>
               <TableRow sx={{ backgroundColor: '#1976d2', color: '#fff' }}>
+                <TableCell sx={{ color: '#fff', fontWeight: 'bold' }}>Image</TableCell>
                 <TableCell sx={{ color: '#fff', fontWeight: 'bold' }}>Name</TableCell>
                 <TableCell align="left" sx={{ color: '#fff', fontWeight: 'bold' }}>Address</TableCell>
                 <TableCell align="left" sx={{ color: '#fff', fontWeight: 'bold' }}>Email</TableCell>
@@ -75,6 +78,15 @@ const Home = () => {
                   key={row.id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 }, '&:hover': { backgroundColor: '#f1f1f1' } }}
                 >
+
+
+                  <TableCell component="th" scope="row">
+                    {row.image ? (
+                      <Avatar src={row.image} alt="User Image"  />
+                    ) : (
+                      <Avatar />
+                    )}
+                  </TableCell>
                   <TableCell component="th" scope="row">
                     {row.name}
                   </TableCell>
@@ -116,7 +128,7 @@ const Home = () => {
                           <DeleteIcon />
                         </IconButton>
                       </ButtonGroup>
-                      
+
                     </ButtonGroup>
                   </TableCell>
                 </TableRow>

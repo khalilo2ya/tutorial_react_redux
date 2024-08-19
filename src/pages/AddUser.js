@@ -3,11 +3,12 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import Paper from '@mui/material/Paper';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../redux/actions';
-
+import StyledFileInput from '../components/StyledFileInput';
 const AddUser = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -31,16 +32,19 @@ const AddUser = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
-    
+
     reader.onloadend = () => {
       setState({ ...state, image: reader.result });
     }
-    
+
     if (file) {
       reader.readAsDataURL(file);
     }
   }
 
+  const handleRemoveImage = () => {
+    setState({ ...state, image: "" });
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!name || !email || !contact || !address) {
@@ -53,76 +57,77 @@ const AddUser = () => {
 
   return (
     <Container maxWidth="sm" sx={{ marginTop: '2rem' }}>
-      <Box sx={{ textAlign: 'left', marginBottom: '1rem' }}>
-        <h2>Add New User</h2>
-        {error && <h3 style={{ color: "red" }}>{error}</h3>}
-        <Button variant="contained" color="primary" startIcon={<ArrowBackIcon />} onClick={() => navigate('/')}>
-          Back
-        </Button>
-      </Box>
-      <Box
-        component="form"
-        noValidate
-        autoComplete="off"
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1rem'
-        }}
-        onSubmit={handleSubmit}
-      >
-        <TextField
-          type='text'
-          variant='standard'
-          label='Name'
-          name='name'
-          value={name}
-          onChange={handleInputChange}
-        />
-        <TextField
-          type='email'
-          variant='standard'
-          label='Email'
-          name='email'
-          value={email}
-          onChange={handleInputChange}
-        />
-        <TextField
-          type='number'
-          variant='standard'
-          label='Contact'
-          name='contact'
-          value={contact}
-          onChange={handleInputChange}
-        />
-        <TextField
-          type='text'
-          variant='standard'
-          label='Address'
-          name='address'
-          value={address}
-          onChange={handleInputChange}
-        />
-        <TextField
-          type="text"
-          variant="standard"
-          label="Biography"
-          name="bio"
-          value={bio}
-          onChange={handleInputChange}
-          multiline
-          rows={4} 
-        />
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-        />
-        {image && <img src={image} alt="User" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />}
-        <Button variant='contained' color='primary' type='submit'>
-          Save
-        </Button>
-      </Box>
+      <Paper elevation={3} sx={{ padding: '2rem', textAlign: 'center' }}>
+        <Box sx={{ textAlign: 'left', marginBottom: '1rem' }}>
+          <Button variant="contained" color="primary" startIcon={<ArrowBackIcon />} onClick={() => navigate('/')}>
+            Go Back
+          </Button>
+          <h2>Add New User</h2>
+          {error && <h3 style={{ color: "red" }}>{error}</h3>}
+        </Box>
+        <Box
+          component="form"
+          noValidate
+          autoComplete="off"
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem'
+          }}
+          onSubmit={handleSubmit}
+        >
+          <TextField
+            type='text'
+            variant='standard'
+            label='Name'
+            name='name'
+            value={name}
+            onChange={handleInputChange}
+          />
+          <TextField
+            type='email'
+            variant='standard'
+            label='Email'
+            name='email'
+            value={email}
+            onChange={handleInputChange}
+          />
+          <TextField
+            type='number'
+            variant='standard'
+            label='Contact'
+            name='contact'
+            value={contact}
+            onChange={handleInputChange}
+          />
+          <TextField
+            type='text'
+            variant='standard'
+            label='Address'
+            name='address'
+            value={address}
+            onChange={handleInputChange}
+          />
+          <TextField
+            type="text"
+            variant="standard"
+            label="Biography"
+            name="bio"
+            value={bio}
+            onChange={handleInputChange}
+            multiline
+            rows={4}
+          />
+          <StyledFileInput
+            image={image}
+            onChange={handleImageChange}
+            onRemove={handleRemoveImage}
+          />
+          <Button variant='contained' color='primary' type='submit'>
+            Save
+          </Button>
+        </Box>
+      </Paper>
     </Container>
   );
 };
