@@ -22,6 +22,12 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteUser, loadUsers } from '../redux/actions';
 
+import Slide from '@mui/material/Slide';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -116,20 +122,22 @@ const Home = () => {
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        TransitionComponent={Transition}
+        fullScreen
       >
         <DialogTitle id="alert-dialog-title">
           {"Confirm Deletion"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete this user? This action cannot be undone.
+            Are you sure you want to delete this user?<br/> This action cannot be undone.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} color="primary" >
             Cancel
           </Button>
-          <Button onClick={handleDelete} color="error" autoFocus>
+          <Button onClick={handleDelete}  variant="contained" color="error" autoFocus>
             Delete
           </Button>
         </DialogActions>

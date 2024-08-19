@@ -23,7 +23,7 @@ const userAdded =() =>({
 }) 
 
 
-const userUpdated =(user, id) =>({
+const userUpdated =() =>({
     type: types.UPDATE_USER,
 }) 
 
