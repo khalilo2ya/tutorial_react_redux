@@ -16,11 +16,12 @@ const Edituser = () => {
     name: "",
     email: "",
     contact: "",
-    address: ""
+    address: "",
+    bio :""
   });
   const { user } = useSelector((state)=> state.data);
   const [error, setError] = useState("");
-  const { name, email, contact, address } = state;
+  const { name, email, contact, address, bio } = state;
 
 
 
@@ -108,6 +109,16 @@ const Edituser = () => {
           name='address'
           value={address}
           onChange={handleInputChange}
+        />
+        <TextField
+          type="text"
+          variant="standard"
+          label="Biography"
+          name="bio"
+          value={bio}
+          onChange={handleInputChange}
+          multiline
+          rows={4} 
         />
         <Button variant='contained' color='primary' type='submit'>
           Update

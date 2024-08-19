@@ -14,11 +14,12 @@ const AddUser = () => {
     name: "",
     email: "",
     contact: "",
-    address: ""
+    address: "",
+    bio: ""
   });
   const [error, setError] = useState("");
 
-  const { name, email, contact, address } = state;
+  const { name, email, contact, address, bio } = state;
 
   const handleInputChange = (e) => {
     let { name, value } = e.target;
@@ -89,6 +90,16 @@ const AddUser = () => {
           name='address'
           value={address}
           onChange={handleInputChange}
+        />
+        <TextField
+          type="text"
+          variant="standard"
+          label="Biography"
+          name="bio"
+          value={bio}
+          onChange={handleInputChange}
+          multiline
+          rows={4} 
         />
         <Button variant='contained' color='primary' type='submit'>
           Save

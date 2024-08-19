@@ -20,9 +20,22 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteUser, loadUsers } from '../redux/actions';
-
+import { deleteUser, loadUsers, getUserByID } from '../redux/actions';
 import Slide from '@mui/material/Slide';
+import InfoIcon from '@mui/icons-material/Info';
+import EyeIcon from '@mui/icons-material/RemoveRedEye';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Divider from '@mui/material/Divider';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import IconButton from '@mui/material/IconButton';
+import EmailIcon from '@mui/icons-material/Email';
+import PhoneIcon from '@mui/icons-material/Phone';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import PersonIcon from '@mui/icons-material/Person';
+import CodeIcon from '@mui/icons-material/Code';
+// Divider ListItemText ListItemIcon
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -31,9 +44,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { users } = useSelector(state => state.data);
+  const { users, user } = useSelector(state => state.data);
 
   const [open, setOpen] = useState(false);
+  const [openDetails, setOpenDetails] = useState(false);
   const [userIdToDelete, setUserIdToDelete] = useState(null);
 
   useEffect(() => {
@@ -55,6 +69,15 @@ const Home = () => {
       dispatch(deleteUser(userIdToDelete));
       handleClose();
     }
+  };
+
+  const handleViewDetails = (userId) => {
+    dispatch(getUserByID(userId));
+    setOpenDetails(true);
+  };
+
+  const handleCloseDetails = () => {
+    setOpenDetails(false);
   };
 
   return (
@@ -92,22 +115,28 @@ const Home = () => {
                       variant="contained"
                       aria-label="Disabled button group"
                     >
-                      <Button
+                      <IconButton
                         variant="contained"
                         color="success"
-                        startIcon={<EditIcon />}
-                        onClick={()=>navigate(`/edit/${row.id}`)}
+                        onClick={() => navigate(`/edit/${row.id}`)}
                       >
-                        Edit
-                      </Button>
-                      <Button
+                        <EditIcon />
+                      </IconButton>
+                      <IconButton
+                        variant="contained"
+                        color="info"
+
+                        onClick={() => handleViewDetails(row.id)}
+                      >
+                        <EyeIcon />
+                      </IconButton>
+                      <IconButton
                         variant="contained"
                         color="error"
-                        startIcon={<DeleteIcon />}
                         onClick={() => handleClickOpen(row.id)}
                       >
-                        Delete
-                      </Button>
+                        <DeleteIcon />
+                      </IconButton>
                     </ButtonGroup>
                   </TableCell>
                 </TableRow>
@@ -123,27 +152,82 @@ const Home = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         TransitionComponent={Transition}
-        fullScreen
+        fullWidth
+        maxWidth="sm"
       >
         <DialogTitle id="alert-dialog-title">
           {"Confirm Deletion"}
         </DialogTitle>
-        <DialogContent>
+        <DialogContent dividers>
           <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete this user?<br/> This action cannot be undone.
+            Are you sure you want to delete this user? This action cannot be undone.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary" >
+          <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleDelete}  variant="contained" color="error" autoFocus>
+          <Button onClick={handleDelete} variant="contained" color="error" autoFocus>
             Delete
           </Button>
         </DialogActions>
       </Dialog>
+
+      <Dialog
+        open={openDetails}
+        onClose={handleCloseDetails}
+        aria-labelledby="user-details-dialog-title"
+        TransitionComponent={Transition}
+        fullWidth
+        maxWidth="sm"
+      >
+        <DialogTitle id="user-details-dialog-title">User Details</DialogTitle>
+        <DialogContent  dividers>
+          <List>
+            <ListItem>
+              <ListItemIcon>
+                <PersonIcon />
+              </ListItemIcon>
+              <ListItemText primary="Company" secondary={user.name} />
+            </ListItem>
+            <ListItem>
+              <ListItemIcon>
+                <EmailIcon />
+              </ListItemIcon>
+              <ListItemText primary="Email" secondary={user.email} />
+            </ListItem>
+            <Divider />
+            <ListItem>
+              <ListItemIcon>
+                <PhoneIcon />
+              </ListItemIcon>
+              <ListItemText primary="Phone" secondary={user.contact} />
+            </ListItem>
+            <Divider />
+            <ListItem>
+              <ListItemIcon>
+                <LocationOnIcon />
+              </ListItemIcon>
+              <ListItemText primary="Location" secondary={user.address} />
+            </ListItem>
+            <Divider />
+            <ListItem>
+              <ListItemIcon>
+                <InfoIcon /> {/* Icône pour la biographie */}
+              </ListItemIcon>
+              <ListItemText primary="Biography" secondary={user.bio} /> {/* Ajout de la biographie */}
+            </ListItem>
+          </List>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDetails} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+
     </div>
-  )
+  );
 }
 
 export default Home;

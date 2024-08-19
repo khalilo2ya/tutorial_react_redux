@@ -8,7 +8,7 @@ import CodeIcon from '@mui/icons-material/Code';
 
 const Contact = () => {
   return (
-    <Container maxWidth="sm" sx={{ marginTop: '2rem' }}>
+    <Container maxWidth="md" sx={{ marginTop: '2rem' }}>
       <Paper elevation={3} sx={{ padding: '2rem', textAlign: 'center' }}>
         <Typography variant="h4" gutterBottom>
           Contact Information

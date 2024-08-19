@@ -2,10 +2,12 @@ import React from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 
 const About = () => {
   return (
     <Container maxWidth="md" sx={{ marginTop: '2rem' }}>
+       <Paper elevation={3} sx={{ padding: '2rem', textAlign: 'center' }}>
       <Box sx={{ textAlign: 'left', marginBottom: '2rem' }}>
         <Typography variant="h4" gutterBottom>
           About the Project
@@ -37,6 +39,7 @@ const About = () => {
           The project is designed to provide a simple yet comprehensive example of how to build a full-featured CRUD application with React and Redux.
         </Typography>
       </Box>
+      </Paper>
     </Container>
   );
 };
