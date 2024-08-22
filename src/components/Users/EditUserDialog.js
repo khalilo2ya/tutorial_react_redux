@@ -10,7 +10,12 @@ import Alert from '@mui/material/Alert';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserByID, updateUser } from '../../redux/actions'; // Ensure the action paths are correct
 import StyledFileInput from '../StyledFileInput';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
+import AppBar from '@mui/material/AppBar';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="down" ref={ref} {...props} />;
@@ -82,8 +87,28 @@ const EditUserDialog = ({ open, handleClose, userId }) => {
 
     return (
         <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth fullScreen TransitionComponent={Transition}>
-            <DialogTitle>Edit User</DialogTitle>
-            <DialogContent>
+            <AppBar sx={{ position: 'relative' }}>
+                <Toolbar>
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                        onClick={handleClose}
+                        aria-label="close"
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                    <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                        Edit user
+                    </Typography>
+                    <Button autoFocus color="inherit" onClick={handleSubmit}>
+                        save
+                    </Button>
+                </Toolbar>
+            </AppBar>
+
+            {/* <DialogTitle>Edit User</DialogTitle> */}
+
+            <DialogContent dividers>
                 <Box
                     component="form"
                     noValidate
@@ -150,10 +175,10 @@ const EditUserDialog = ({ open, handleClose, userId }) => {
                     />
                 </Box>
             </DialogContent>
-            <DialogActions>
+            {/* <DialogActions>
                 <Button onClick={handleClose} color="secondary">Cancel</Button>
                 <Button onClick={handleSubmit} color="primary" variant="contained">Update</Button>
-            </DialogActions>
+            </DialogActions> */}
         </Dialog>
     );
 };

@@ -10,8 +10,14 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../../redux/actions';
 import StyledFileInput from '../StyledFileInput';
-
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
+import AppBar from '@mui/material/AppBar';
+
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -69,9 +75,27 @@ const AddUserDialog = ({ open, handleClose }) => {
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth fullScreen TransitionComponent={Transition}>
-      <DialogTitle>Add New User</DialogTitle>
-      {error && <Alert severity="error" variant="outlined"  >{error}</Alert>}
-      <DialogContent>
+      <AppBar sx={{ position: 'relative' }}>
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+              Add new user
+            </Typography>
+            <Button autoFocus color="inherit" onClick={handleSubmit}>
+              save
+            </Button>
+          </Toolbar>
+        </AppBar>
+      {/* <DialogTitle>Add New User</DialogTitle> */}
+      
+      <DialogContent dividers>
         <Box
           component="form"
           noValidate
@@ -138,10 +162,11 @@ const AddUserDialog = ({ open, handleClose }) => {
           />
         </Box>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose} color="secondary">Cancel</Button>
-        <Button onClick={handleSubmit} color="primary" variant="contained">Save</Button>
-      </DialogActions>
+      {error && <Alert severity="error" variant="outlined"  >{error}</Alert>}
+      {/* <DialogActions> */}
+        {/* <Button onClick={handleClose} color="secondary">Cancel</Button> */}
+        {/* <Button onClick={handleSubmit} color="primary" variant="contained">Save</Button> */}
+      {/* </DialogActions> */}
     </Dialog>
   );
 };
