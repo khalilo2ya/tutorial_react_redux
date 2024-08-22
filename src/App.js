@@ -1,5 +1,5 @@
 import './App.css';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Sidebar from './components/Sidebar';
@@ -10,30 +10,44 @@ import AddUser from './pages/AddUser';
 import EditUser from './pages/EditUser';
 import EnhancedTableHead from './pages/EnhancedTableHead';
 import DataTable from './pages/DataTable';
-import { Box, Grid } from '@mui/material';
+import { Box } from '@mui/material';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 function App() {
+  const location = useLocation();
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
+
   return (
     <div className="App">
-      <Header />
-      <Box sx={{ display: 'flex' }}>
-        {/* Sidebar */}
-        <Sidebar />
-
-        {/* Main Content */}
-        <Box sx={{ flexGrow: 1, p: 3 }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/add" element={<AddUser />} />
-            <Route path="/headtable" element={<EnhancedTableHead />} />
-            <Route path="/datatable" element={<DataTable />} />
-            <Route path="/edit/:id" element={<EditUser />} />
-          </Routes>
+      {/* Conditionally render Header, Sidebar, and Footer */}
+      {!isAuthPage && <Header />}
+      {!isAuthPage && (
+        <Box sx={{ display: 'flex' }}>
+          <Sidebar />
+          {/* Main Content */}
+          <Box sx={{ flexGrow: 1, p: 3 }}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/add" element={<AddUser />} />
+              <Route path="/headtable" element={<EnhancedTableHead />} />
+              <Route path="/datatable" element={<DataTable />} />
+              <Route path="/edit/:id" element={<EditUser />} />
+            </Routes>
+          </Box>
         </Box>
-      </Box>
-      <Footer />
+      )}
+
+      {/* Routes for Auth Pages */}
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+
+      {/* Conditionally render Footer */}
+      {!isAuthPage && <Footer />}
     </div>
   );
 }
